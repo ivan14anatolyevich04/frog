@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Моя AR Мультяшка</title>
+    <!-- 1. Подключаем библиотеки (можно использовать эти CDN-ссылки) -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <!-- 2. Главная AR-сцена -->
+    <!-- В imageTargetSrc указываем путь к вашему .mind файлу (просто имя, если он в той же папке) -->
+    <a-scene 
+      mindar-image="imageTargetSrc: ./targets.mind;" 
+      color-space="sRGB" 
+      renderer="colorManagement: true, physicallyCorrectLights" 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: false">
+      
+      <!-- 3. Предзагрузка 3D-модели -->
+      <a-assets>
+        <!-- src="./model.glb" — путь к вашей модели -->
+        <a-asset-item id="cartoonModel" src="./model.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- 4. Виртуальная камера -->
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <!-- 5. Цель (картинка) и 3D-модель поверх неё -->
+      <!-- targetIndex: 0 означает "первая картинка из файла .mind" -->
+      <a-entity mindar-image-target="targetIndex: 0">
+        <!-- Здесь настраивается положение и размер модели -->
+        <!-- position="0 0 0" — модель по центру картинки -->
+        <!-- scale="0.05 0.05 0.05" — уменьшаем модель, так как в 3D-редакторах она может быть огромной -->
+        <a-gltf-model 
+          src="#cartoonModel" 
+          position="0 0 0" 
+          scale="0.05 0.05 0.05" 
+          animation-mixer>
+        </a-gltf-model>
+      </a-entity>
+      
+    </a-scene>
+  </body>
+</html>
